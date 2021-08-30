@@ -1,5 +1,5 @@
 body {
-    background: rgb(196, 236, 243);
+    background: rgb(196, 209, 243);
     color: black;
 }
 .container {
@@ -11,12 +11,12 @@ body {
     background: white;
 }
 .error {
-    color: red;
+    color: rgb(245, 135, 171);
     font-size: 14px;
 }
 button {
     text-decoration: none;
-    background: blue;
+    background: rgb(136, 136, 248);
     color: white;
     font-weight: bold;
     border: 0;
