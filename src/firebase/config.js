@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 const firebaseConfig = {
     apiKey: "AIzaSyDqqF9LTGRJekZi99L7VHbqDo7eMUekrZM",
     authDomain: "vue-content-post.firebaseapp.com",
@@ -12,6 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 let db =firebase.firestore();
+let auth= firebase.auth();
 let timestamp= firebase.firestore.FieldValue.serverTimestamp;
 
-export {db,timestamp};
+export {db,timestamp,auth};
