@@ -12,7 +12,7 @@ let createAccount=async(email,password,displayName)=>{
       res.user.updateProfile({displayName})
       return res;
       }catch(err){
-        error=err.message;
+        error.value=err.message;
     }
 }
 let useSignup=()=>{
