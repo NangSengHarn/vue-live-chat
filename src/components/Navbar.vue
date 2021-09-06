@@ -19,7 +19,6 @@ setup(){
        let res= await Logout();
        
     }
-    
     return {logout,user};
 }
 }
