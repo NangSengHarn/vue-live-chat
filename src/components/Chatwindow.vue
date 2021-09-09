@@ -1,8 +1,8 @@
 <template>
   <div class="chat-window">
-      <div class="messages" v-for="message in messages" :key="message.id">
-          <div class="single">
-              <span class="created-at">{{message.created_at.toDate()}}</span>
+      <div class="messages">
+          <div class="single" v-for="message in formatedMessages" :key="message.id">
+              <span class="created-at">{{message.created_at}}</span>
               <span class="name">{{message.name}}</span>
               <span class="message">{{message.message}}</span>
           </div>
@@ -11,11 +11,18 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import {db} from '../firebase/config'
+import {formatDistanceToNow} from 'date-fns'
 export default {
     setup(){
         let messages=ref([]);
+        let formatedMessages=computed(()=>{
+          return messages.value.map((msg)=>{
+            let formatedTime=formatDistanceToNow(msg.created_at.toDate())
+            return {...msg,created_at:formatedTime}
+          })
+        })
         db.collection("messages").orderBy("created_at").onSnapshot((snap)=>{
             let results=[];
             snap.docs.forEach((doc)=>{
@@ -27,31 +34,31 @@ export default {
             })
             messages.value=results;
         })
-        return {messages};
+        return {formatedMessages};
     }
 }
 </script>
 
 <style>
-    .chat-window {
-        background: #fafafa;
-        padding: 30px 20px;
-      }
-      .single {
-        margin: 18px 0;
-      }
-      .created-at {
-        display: block;
-        color: #999;
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-      .name {
-        font-weight: bold;
-        margin-right: 6px;
-      }
-      .messages {
-        max-height: 400px;
-        overflow: auto;
-      }
+.chat-window {
+  background: #fafafa;
+  padding: 30px 20px;
+}
+.single {
+    margin: 18px 0;
+}
+.created-at {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.name {
+    font-weight: bold;
+    margin-right: 6px;
+}
+.messages {
+    max-height: 400px;
+    overflow: auto;
+}
 </style>
